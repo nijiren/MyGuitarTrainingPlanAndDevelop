@@ -77,6 +77,12 @@
         .third { background-color: #4444ff; }
         .fifth { background-color: #44ff44; }
         .seventh { background-color: #ffff44; }
+        .dim5 { background-color: #ff44ff; }
+        .aug5 { background-color: #ff8844; }
+        .sus2 { background-color: #44ffff; }
+        .sus4 { background-color: #ffaa44; }
+        .ninth { background-color: #aa44ff; }
+        .sixth { background-color: #44ffaa; }
     </style>
 </head>
 <body>
@@ -86,18 +92,48 @@
             <label>
                 コード:
                 <select id="chordSelect">
-                    <option value="A">A (A, C#, E)</option>
-                    <option value="Am">Am (A, C, E)</option>
-                    <option value="A7">A7 (A, C#, E, G)</option>
-                    <option value="D">D (D, F#, A)</option>
-                    <option value="Dm">Dm (D, F, A)</option>
-                    <option value="D7">D7 (D, F#, A, C)</option>
-                    <option value="E">E (E, G#, B)</option>
-                    <option value="Em">Em (E, G, B)</option>
-                    <option value="E7">E7 (E, G#, B, D)</option>
-                    <option value="G">G (G, B, D)</option>
-                    <option value="Gm">Gm (G, Bb, D)</option>
-                    <option value="C">C (C, E, G)</option>
+                    <optgroup label="メジャー/マイナー">
+                        <option value="A">A (A, C#, E)</option>
+                        <option value="Am">Am (A, C, E)</option>
+                        <option value="A7">A7 (A, C#, E, G)</option>
+                        <option value="D">D (D, F#, A)</option>
+                        <option value="Dm">Dm (D, F, A)</option>
+                        <option value="D7">D7 (D, F#, A, C)</option>
+                        <option value="E">E (E, G#, B)</option>
+                        <option value="Em">Em (E, G, B)</option>
+                        <option value="E7">E7 (E, G#, B, D)</option>
+                        <option value="G">G (G, B, D)</option>
+                        <option value="Gm">Gm (G, Bb, D)</option>
+                        <option value="C">C (C, E, G)</option>
+                    </optgroup>
+                    <optgroup label="ディミニッシュ">
+                        <option value="Adim">Adim (A, C, Eb)</option>
+                        <option value="Adim7">Adim7 (A, C, Eb, Gb)</option>
+                        <option value="Ddim">Ddim (D, F, Ab)</option>
+                        <option value="Ddim7">Ddim7 (D, F, Ab, B)</option>
+                        <option value="Edim">Edim (E, G, Bb)</option>
+                        <option value="Edim7">Edim7 (E, G, Bb, Db)</option>
+                    </optgroup>
+                    <optgroup label="オーグメント">
+                        <option value="Aaug">Aaug (A, C#, F)</option>
+                        <option value="Daug">Daug (D, F#, A#)</option>
+                        <option value="Eaug">Eaug (E, G#, C)</option>
+                    </optgroup>
+                    <optgroup label="サスペンド">
+                        <option value="Asus2">Asus2 (A, B, E)</option>
+                        <option value="Asus4">Asus4 (A, D, E)</option>
+                        <option value="Dsus2">Dsus2 (D, E, A)</option>
+                        <option value="Dsus4">Dsus4 (D, G, A)</option>
+                        <option value="Esus2">Esus2 (E, F#, B)</option>
+                        <option value="Esus4">Esus4 (E, A, B)</option>
+                    </optgroup>
+                    <optgroup label="拡張コード">
+                        <option value="Aadd9">Aadd9 (A, C#, E, B)</option>
+                        <option value="A9">A9 (A, C#, E, G, B)</option>
+                        <option value="Am7">Am7 (A, C, E, G)</option>
+                        <option value="Amaj7">Amaj7 (A, C#, E, G#)</option>
+                        <option value="A6">A6 (A, C#, E, F#)</option>
+                    </optgroup>
                 </select>
             </label>
             <label>
@@ -141,6 +177,30 @@
                 <div class="legend-dot seventh"></div>
                 <span>7th</span>
             </div>
+            <div class="legend-item">
+                <div class="legend-dot dim5"></div>
+                <span>♭5th</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot aug5"></div>
+                <span>#5th</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot sus2"></div>
+                <span>2nd</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot sus4"></div>
+                <span>4th</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot ninth"></div>
+                <span>9th</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot sixth"></div>
+                <span>6th</span>
+            </div>
         </div>
     </div>
 
@@ -151,9 +211,12 @@
 
         // コードトーンの定義
         const chordTones = {
+            // メジャー/マイナー
             'A': { root: 'A', third: 'C#', fifth: 'E' },
             'Am': { root: 'A', third: 'C', fifth: 'E' },
             'A7': { root: 'A', third: 'C#', fifth: 'E', seventh: 'G' },
+            'Am7': { root: 'A', third: 'C', fifth: 'E', seventh: 'G' },
+            'Amaj7': { root: 'A', third: 'C#', fifth: 'E', seventh: 'G#' },
             'D': { root: 'D', third: 'F#', fifth: 'A' },
             'Dm': { root: 'D', third: 'F', fifth: 'A' },
             'D7': { root: 'D', third: 'F#', fifth: 'A', seventh: 'C' },
@@ -162,7 +225,29 @@
             'E7': { root: 'E', third: 'G#', fifth: 'B', seventh: 'D' },
             'G': { root: 'G', third: 'B', fifth: 'D' },
             'Gm': { root: 'G', third: 'Bb', fifth: 'D' },
-            'C': { root: 'C', third: 'E', fifth: 'G' }
+            'C': { root: 'C', third: 'E', fifth: 'G' },
+            // ディミニッシュ
+            'Adim': { root: 'A', third: 'C', dim5: 'Eb' },
+            'Adim7': { root: 'A', third: 'C', dim5: 'Eb', sixth: 'Gb' },
+            'Ddim': { root: 'D', third: 'F', dim5: 'Ab' },
+            'Ddim7': { root: 'D', third: 'F', dim5: 'Ab', sixth: 'B' },
+            'Edim': { root: 'E', third: 'G', dim5: 'Bb' },
+            'Edim7': { root: 'E', third: 'G', dim5: 'Bb', sixth: 'Db' },
+            // オーグメント
+            'Aaug': { root: 'A', third: 'C#', aug5: 'F' },
+            'Daug': { root: 'D', third: 'F#', aug5: 'A#' },
+            'Eaug': { root: 'E', third: 'G#', aug5: 'C' },
+            // サスペンド
+            'Asus2': { root: 'A', sus2: 'B', fifth: 'E' },
+            'Asus4': { root: 'A', sus4: 'D', fifth: 'E' },
+            'Dsus2': { root: 'D', sus2: 'E', fifth: 'A' },
+            'Dsus4': { root: 'D', sus4: 'G', fifth: 'A' },
+            'Esus2': { root: 'E', sus2: 'F#', fifth: 'B' },
+            'Esus4': { root: 'E', sus4: 'A', fifth: 'B' },
+            // 拡張コード
+            'Aadd9': { root: 'A', third: 'C#', fifth: 'E', ninth: 'B' },
+            'A9': { root: 'A', third: 'C#', fifth: 'E', seventh: 'G', ninth: 'B' },
+            'A6': { root: 'A', third: 'C#', fifth: 'E', sixth: 'F#' }
         };
 
         // 音名を半音数に変換
@@ -186,6 +271,12 @@
             if (note === tones.third) return 'third';
             if (note === tones.fifth) return 'fifth';
             if (tones.seventh && note === tones.seventh) return 'seventh';
+            if (tones.dim5 && note === tones.dim5) return 'dim5';
+            if (tones.aug5 && note === tones.aug5) return 'aug5';
+            if (tones.sus2 && note === tones.sus2) return 'sus2';
+            if (tones.sus4 && note === tones.sus4) return 'sus4';
+            if (tones.ninth && note === tones.ninth) return 'ninth';
+            if (tones.sixth && note === tones.sixth) return 'sixth';
             return null;
         }
 
@@ -277,10 +368,13 @@
 
                     if (toneType) {
                         // 表示モードのチェック
-                        if (displayMode === 'triad' && toneType === 'seventh') continue;
+                        // サスペンドコード（sus2, sus4）はトライアドの一部として扱う
+                        const isExtendedTone = ['seventh', 'dim5', 'aug5', 'ninth', 'sixth'].includes(toneType);
+                        const isSusTone = ['sus2', 'sus4'].includes(toneType);
+                        if (displayMode === 'triad' && isExtendedTone) continue;
                         if (displayMode === 'all' || 
-                            (displayMode === 'triad' && toneType !== 'seventh') ||
-                            (displayMode === 'seventh')) {
+                            (displayMode === 'triad' && (!isExtendedTone || isSusTone)) ||
+                            (displayMode === 'seventh' && (!isExtendedTone || isSusTone))) {
                             
                             const x = leftMargin + f * fretSpacing;
                             const y = topMargin + s * stringSpacing;
@@ -294,7 +388,13 @@
                                 'root': '#ff4444',
                                 'third': '#4444ff',
                                 'fifth': '#44ff44',
-                                'seventh': '#ffff44'
+                                'seventh': '#ffff44',
+                                'dim5': '#ff44ff',
+                                'aug5': '#ff8844',
+                                'sus2': '#44ffff',
+                                'sus4': '#ffaa44',
+                                'ninth': '#aa44ff',
+                                'sixth': '#44ffaa'
                             };
                             
                             circle.setAttribute('fill', colors[toneType]);
